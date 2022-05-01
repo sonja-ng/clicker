@@ -1,6 +1,6 @@
 import React from 'react';
 import Counter from '../Counter'
-import { render, fireEvent, cleanup } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 let getByTestId; 
@@ -8,10 +8,6 @@ let getByTestId;
 beforeEach(() => {
     const component = render(<Counter />) //before each function runs
     getByTestId = component.getByTestId
-})
-
-afterEach(() => {
-    cleanup()
 })
 
 test("header renders with correct text", () => {
@@ -32,15 +28,11 @@ test ("input contains initial value of 1", () => {
 })
 
 test("add button renders with +", () => {
-    const addBtn = getByTestId("add-btn")
-
-    expect(addBtn.textContent).toBe("+")
+    expect(screen.getByRole("button", {name: /\+/i})).toBeInTheDocument()
 })
 
 test("add button renders with -", () => {
-    const subtractBtn = getByTestId("subtract-btn")
-
-    expect(subtractBtn.textContent).toBe("-")
+    expect(screen.getByRole("button", {name: /\-/i})).toBeInTheDocument()
 })
 
 test("change value of input works correctly", () => {
